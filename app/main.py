@@ -6,6 +6,12 @@ app = Flask(__name__)
 
 deployments = []
 
+@app.get("/")
+def home():
+    return jsonify({
+        "service": "Deployment Tracker API",
+        "status": "running"
+    }), 200
 
 @app.get("/healthz")
 def healthz():
