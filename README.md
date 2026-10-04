@@ -16,3 +16,7 @@ Install dependencies:
 
 ```bash
 python -m pip install -r requirements.txt
+
+## Project purpose
+
+This project is designed as a simple DevOps-oriented service that can later be containerized, tested in CI/CD pipelines, and deployed to Kubernetes.
