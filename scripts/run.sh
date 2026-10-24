@@ -12,4 +12,3 @@ else
 fi
 
 $PYTHON -m app.main
-EOF
