@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mine
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mine
+  template:
+    metadata:
+      labels:
+        app: mine
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/werqnet/deployment-tracker-api:fde0865a90a21818dce7faf3cf7703f2bc47fe6b
+          env:
+            - name: PORT
+              value: "8080"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mine
+spec:
+  selector:
+    app: mine
+  ports:
+    - port: 80
+      targetPort: 8080
