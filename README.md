@@ -176,3 +176,19 @@ deployment-tracker-api/
 ├── README.md
 └── requirements.txt
 ```
+
+## Rollback
+
+Argo CD deploys the `main` branch from the `k8s` folder into the default namespace. Automatic sync, pruning and self-healing keep the deployment aligned with Git. CI builds and publishes images, but does not deploy to the cluster.
+
+To roll back a bad image, find the commit that changed the image and revert it:
+
+```bash
+git switch main
+git pull --ff-only
+git log --oneline -- k8s/deployment.yaml
+git revert <image-bump-commit>
+git push origin main
+```
+
+If reverting a merge commit, use `git revert -m 1 <merge-commit>` instead. Argo CD reconciles to the previous image within about three minutes. Do not use `kubectl rollout undo`: self-heal would restore the version declared in Git. The `app-secret` is created outside Git and is not managed by Argo CD.
